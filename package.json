@@ -1,0 +1,30 @@
+{
+  "name": "perf-profiler",
+  "version": "1.0.0",
+  "description": "Utility library for tracking and tallying function calls in javascript",
+  "main": "perf-profiler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gkjohnson/perf-profiler.git"
+  },
+  "keywords": [
+    "performance",
+    "profile",
+    "profiling",
+    "timing",
+    "time",
+    "now",
+    "tally",
+    "debug",
+    "debugging"
+  ],
+  "author": "Garrett Johnson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gkjohnson/perf-profiler/issues"
+  },
+  "homepage": "https://github.com/gkjohnson/perf-profiler#readme"
+}
