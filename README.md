@@ -13,6 +13,16 @@ PerfProfiler.dump('timing-label')
 PerfProfiler.clear('timing-label')
 ```
 
-The above will print out the average, min, max, and call count of the code wrapped by `timing-label`
+The above will print out the average, min, max, and call count of the code wrapped by `timing-label` in the following format:
 
-Calling `dump()` and `clear()` with no arguments will print and clear _all_ accumulated timing
+```
+timing-label         calls: 2        avg: 1532.5ms                  min: 1416ms                    max: 1649ms
+```
+
+Calling `dump()` and `clear()` with no arguments will print and clear _all_ accumulated timing metrics
+
+### Precision
+
+The most precise timing measurements available are used depending on the platform. In browsers, `performance.now()` is used to get timing data, and in Node, `process.hrtime()` is used.
+
+When a precision timing function is unavailable, `Date.now()` is used, which gives coarse, millisecond precision.
