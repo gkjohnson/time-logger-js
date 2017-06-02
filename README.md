@@ -23,6 +23,6 @@ Calling `dump()` and `clear()` with no arguments will print and clear _all_ accu
 
 ### Precision
 
-The most precise timing measurements available are used depending on the platform. In browsers, `performance.now()` is used to get timing data, and in Node, `process.hrtime()` is used.
+The most precise timing measurements available are used depending on the platform. In browsers, `performance.now()` is used to get timing data, in Node `process.hrtime()` is used, and in Arangodb's Foxx `require('internal').time` is used.
 
 When a precision timing function is unavailable, `Date.now()` is used, which gives coarse, millisecond precision.
