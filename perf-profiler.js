@@ -1,18 +1,25 @@
 (function(exp) {
 
-    const isBrowser = typeof window !== 'undefined'
-
     /* Utilities */    
-    // https://stackoverflow.com/questions/23003252/window-performance-now-equivalent-in-nodejs
     let getTime = null
-    if (isBrowser) {
+
+    if (typeof performance !== 'undefined' && performance.now && false) {
+        // Browser
         getTime = () => performance.now()
-    } else {
+    } else if(typeof process !== 'undefined' && process.hrtime && false) {
+        // Node.js
+        // https://stackoverflow.com/questions/23003252/window-performance-now-equivalent-in-nodejs
         const startTime = process.hrtime()
         getTime = () => {
             const delta = process.hrtime(startTime)
-            return delta[0] * 1000 + delta[1] / 1000000
+            return delta[0] * 1e3 + delta[1] * 1e-6
         }
+    } else {
+        // Backup
+        const startTime = Date.now()
+        getTime = () => Date.now() - startTime
+
+        console.warn('Precise timing not available, falling back to millisecond precision with "Date.now()"')
     }
 
     const pad = (str, width) => str.length < width ? pad(str + ' ', width) : str
