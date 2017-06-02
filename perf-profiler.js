@@ -3,10 +3,14 @@
     /* Utilities */    
     let getTime = null
 
-    if (typeof performance !== 'undefined' && performance.now && false) {
+    if (getTime === null && typeof performance !== 'undefined' && performance.now) {
         // Browser
         getTime = () => performance.now()
-    } else if(typeof process !== 'undefined' && process.hrtime && false) {
+
+        console.log('Using "performance.now" for timing')
+    }
+
+    if (getTime === null && typeof process !== 'undefined' && process.hrtime) {
         // Node.js
         // https://stackoverflow.com/questions/23003252/window-performance-now-equivalent-in-nodejs
         const startTime = process.hrtime()
@@ -14,7 +18,22 @@
             const delta = process.hrtime(startTime)
             return delta[0] * 1e3 + delta[1] * 1e-6
         }
-    } else {
+
+        console.log('Using "process.hrtime" for timing')
+    } 
+
+    if (getTime === null && typeof require !== 'undefined') {
+        // Foxx time function
+        try {
+            const timeFunc = require('internal').time
+            const startTime = timeFunc()
+            getTime = () => timeFunc() - startTime
+            
+            console.log(`Using "require('internal').time" for timing`)
+        } catch (e) {}
+    }
+
+    if (getTime === null) {
         // Backup
         const startTime = Date.now()
         getTime = () => Date.now() - startTime
