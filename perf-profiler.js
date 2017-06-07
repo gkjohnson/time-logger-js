@@ -25,9 +25,12 @@
     if (getTime === null && typeof require !== 'undefined') {
         // Foxx time function
         try {
-            const timeFunc = require('internal').time
-            const startTime = timeFunc()
-            getTime = () => timeFunc() - startTime
+            // internal.time() returns seconds since
+            // epoch with microsecond timing
+            const internal = require('internal')
+            const getTimeNow = () => internal.time * 1000 // ms
+            const startTime = getTimeNow()
+            getTime = () => getTimeNow() - startTime
             
             console.log(`Using "require('internal').time" for timing`)
         } catch (e) {}
