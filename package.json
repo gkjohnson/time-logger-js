@@ -1,5 +1,5 @@
 {
-  "name": "perf-profiler",
+  "name": "@gkjohnson/perf-profiler",
   "version": "1.0.0",
   "description": "Utility library for tracking and tallying function calls in javascript",
   "main": "perf-profiler.js",
