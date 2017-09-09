@@ -1,7 +1,14 @@
 # perf-profiler
 Utility library for tracking and tallying function calls in javascript
 
-### Use
+## Installation
+The repo is provided on npm [here](https://www.npmjs.com/package/@gkjohnson/perf-profiler).
+
+```
+npm install @gkjohnson/perf-profiler
+```
+
+## Use
 ```javascript
 // in node
 const PerfProfiler = require('perf-profiler')
@@ -21,7 +28,7 @@ timing-label         calls: 2        avg: 1532.5ms                  min: 1416ms 
 
 Calling `dump()` and `clear()` with no arguments will print and clear _all_ accumulated timing metrics
 
-### Precision
+## Precision
 
 The most precise timing measurements available are used depending on the platform. In browsers, `performance.now()` is used to get timing data, in Node `process.hrtime()` is used, and in Arangodb's Foxx `require('internal').time` is used.
 
