@@ -1,12 +1,8 @@
 # perf-profiler
+
+[![npm version](https://badge.fury.io/js/%40gkjohnson%2Fperf-profiler.svg)](https://www.npmjs.com/package/@gkjohnson/perf-profiler)
+
 Utility library for tracking and tallying function calls in javascript
-
-## Installation
-The repo is provided on npm [here](https://www.npmjs.com/package/@gkjohnson/perf-profiler).
-
-```
-npm install @gkjohnson/perf-profiler
-```
 
 ## Use
 ```javascript
