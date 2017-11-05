@@ -10,7 +10,7 @@ Utility library for tracking and tallying function calls in javascript
 const PerfProfiler = require('perf-profiler')
 
 PerfProfiler.start('timing-label')
-// ... thing that need to be profiled
+// ... thing that needs to be profiled
 PerfProfiler.end('timing-label')
 PerfProfiler.dump('timing-label')
 PerfProfiler.clear('timing-label')
