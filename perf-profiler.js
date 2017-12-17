@@ -52,16 +52,20 @@
     const marks = {}
     const pendingMarks = {}
 
+    exports.getTime = function() {
+        return getTime()
+    }
+
     // Begins a timing mark
     exports.start = function(str) {
-        pendingMarks[str] = getTime()
+        pendingMarks[str] = this.getTime()
     }
 
     // Ends a timing mark
     exports.end = function(str) {
         if (!(str in pendingMarks)) return
 
-        const delta = getTime() - pendingMarks[str]
+        const delta = this.getTime() - pendingMarks[str]
         const details = 
             marks[str] || {
                 avg: 0,
