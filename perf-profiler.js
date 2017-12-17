@@ -1,48 +1,49 @@
 (exports => {
     /* Get Time Function */
     let getTime = null
+    const initializeTimeFunction = () => {
+        // Browser
+        if (getTime === null && typeof performance !== 'undefined' && performance.now) {
+            getTime = () => performance.now()
 
-    // Browser
-    if (getTime === null && typeof performance !== 'undefined' && performance.now) {
-        getTime = () => performance.now()
+            exports.log('Using "performance.now" for timing')
+        }
+        
+        // Node.js
+        // https://stackoverflow.com/questions/23003252/window-performance-now-equivalent-in-nodejs
+        if (getTime === null && typeof process !== 'undefined' && process.hrtime) {
+            const startTime = process.hrtime()
+            getTime = () => {
+                const delta = process.hrtime(startTime)
+                return delta[0] * 1e3 + delta[1] * 1e-6
+            }
 
-        console.log('Using "performance.now" for timing')
-    }
-    
-    // Node.js
-    // https://stackoverflow.com/questions/23003252/window-performance-now-equivalent-in-nodejs
-    if (getTime === null && typeof process !== 'undefined' && process.hrtime) {
-        const startTime = process.hrtime()
-        getTime = () => {
-            const delta = process.hrtime(startTime)
-            return delta[0] * 1e3 + delta[1] * 1e-6
+            exports.log('Using "process.hrtime" for timing')
+        } 
+
+        // ArangoDB Foxx
+        if (getTime === null && typeof require !== 'undefined') {
+            try {
+                // Using try catch in case the internal package
+                // is made unavailable
+                // internal.time() returns seconds since
+                // epoch with microsecond timing
+                const internal = require('internal')
+                const getTimeNow = () => internal.time * 1000 // ms
+                const startTime = getTimeNow()
+                getTime = () => getTimeNow() - startTime
+                
+                exports.log(`Using "require('internal').time" for timing`)
+            } catch (e) {}
         }
 
-        console.log('Using "process.hrtime" for timing')
-    } 
+        // Fallback to Date.now()
+        if (getTime === null) {
+            const startTime = Date.now()
+            getTime = () => Date.now() - startTime
 
-    // ArangoDB Foxx
-    if (getTime === null && typeof require !== 'undefined') {
-        try {
-            // Using try catch in case the internal package
-            // is made unavailable
-            // internal.time() returns seconds since
-            // epoch with microsecond timing
-            const internal = require('internal')
-            const getTimeNow = () => internal.time * 1000 // ms
-            const startTime = getTimeNow()
-            getTime = () => getTimeNow() - startTime
-            
-            console.log(`Using "require('internal').time" for timing`)
-        } catch (e) {}
-    }
-
-    // Fallback to Date.now()
-    if (getTime === null) {
-        const startTime = Date.now()
-        getTime = () => Date.now() - startTime
-
-        console.warn('Precise timing not available, falling back to millisecond precision with "Date.now()"')
+            exports.warn('Precise timing not available, falling back to millisecond precision with "Date.now()"')
+        }
     }
 
     /* Utilities */
@@ -53,6 +54,7 @@
     const pendingMarks = {}
 
     exports.getTime = function() {
+        if (!getTime) initializeTimeFunction()
         return getTime()
     }
 
