@@ -1,18 +1,17 @@
-(function(exp) {
-
-    /* Utilities */    
+(exports => {
+    /* Get Time Function */
     let getTime = null
 
+    // Browser
     if (getTime === null && typeof performance !== 'undefined' && performance.now) {
-        // Browser
         getTime = () => performance.now()
 
         console.log('Using "performance.now" for timing')
     }
-
+    
+    // Node.js
+    // https://stackoverflow.com/questions/23003252/window-performance-now-equivalent-in-nodejs
     if (getTime === null && typeof process !== 'undefined' && process.hrtime) {
-        // Node.js
-        // https://stackoverflow.com/questions/23003252/window-performance-now-equivalent-in-nodejs
         const startTime = process.hrtime()
         getTime = () => {
             const delta = process.hrtime(startTime)
@@ -22,9 +21,11 @@
         console.log('Using "process.hrtime" for timing')
     } 
 
+    // ArangoDB Foxx
     if (getTime === null && typeof require !== 'undefined') {
-        // Foxx time function
         try {
+            // Using try catch in case the internal package
+            // is made unavailable
             // internal.time() returns seconds since
             // epoch with microsecond timing
             const internal = require('internal')
@@ -36,14 +37,15 @@
         } catch (e) {}
     }
 
+    // Fallback to Date.now()
     if (getTime === null) {
-        // Backup
         const startTime = Date.now()
         getTime = () => Date.now() - startTime
 
         console.warn('Precise timing not available, falling back to millisecond precision with "Date.now()"')
     }
 
+    /* Utilities */
     const pad = (str, width) => str.length < width ? pad(str + ' ', width) : str
 
     /* Public API */
@@ -51,16 +53,16 @@
     const pendingMarks = {}
 
     // Begins a timing mark
-    exp.start = function(str) {
+    exports.start = function(str) {
         pendingMarks[str] = getTime()
     }
 
     // Ends a timing mark
-    exp.end = function(str) {
+    exports.end = function(str) {
         if (!(str in pendingMarks)) return
 
         const delta = getTime() - pendingMarks[str]
-        const det = 
+        const details = 
             marks[str] || {
                 avg: 0,
                 min: delta,
@@ -68,17 +70,17 @@
                 tally: 0
             }
 
-        det.tally++
-        det.avg += (delta - det.avg) / det.tally
-        det.min = Math.min(det.min, delta)
-        det.max = Math.max(det.max, delta)
-        marks[str] = det
+        details.tally++
+        details.avg += (delta - details.avg) / details.tally
+        details.min = Math.min(details.min, delta)
+        details.max = Math.max(details.max, delta)
+        marks[str] = details
 
         delete pendingMarks[str]
     }
 
     // Clears out all accumulated timing
-    exp.clear = function(str) {
+    exports.clear = function(str = null) {
         if (str != null) {
             if (str in marks)           delete marks[str]
             if (str in pendingMarks)    delete pendingMarks[str]
@@ -89,20 +91,25 @@
     }
 
     // Prints out all the logs for the given timing
-    exp.dump = function(str) {
+    exports.dump = function(str = null) {
         if (str != null) {
             if (str in marks) {
-                const det = marks[str]
-                console.log(
-                    pad(str, 20),
-                    pad(`calls: ${det.tally}`, 15),
-                    pad(`avg: ${det.avg}ms`, 30),
-                    pad(`min: ${det.min}ms`, 30),
-                    pad(`max: ${det.max}ms`, 30))
+                const details = marks[str]
+                this.log(details)
             }
         } else {
             for (let key in marks) this.dump(key)
         }
+    }
+
+    // Overridable Log function
+    exports.log = details => {
+        console.log(
+            pad(str, 20),
+            pad(`calls: ${det.tally}`, 15),
+            pad(`avg: ${det.avg}ms`, 30),
+            pad(`min: ${det.min}ms`, 30),
+            pad(`max: ${det.max}ms`, 30))
     }
 
 })(typeof window !== 'undefined' ? window.PerfProfiler = {} : module.exports = {})
