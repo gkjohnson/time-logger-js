@@ -10,7 +10,7 @@ Utility library for tracking and tallying function calls in javascript
 const PerfProfiler = require('perf-profiler')
 
 PerfProfiler.start('timing-label')
-// ... thing that needs to be profiled
+// ... code that needs to be profiled
 PerfProfiler.end('timing-label')
 PerfProfiler.dump('timing-label')
 PerfProfiler.clear('timing-label')
@@ -23,6 +23,17 @@ timing-label         calls: 2        avg: 1532.5ms                  min: 1416ms 
 ```
 
 Calling `dump()` and `clear()` with no arguments will print and clear _all_ accumulated timing metrics
+
+### Custom Logging
+```javascript
+// override the log function
+PerfProfiler.log = (key, details) => console.log(key, details)
+
+// log function gets called with data to dump
+PerfProfiler.dump('time-label')
+```
+
+A custom logging function can be added to transform or conditionally log the dumped timing data. The `avg`, `tally`, `min`, and `max` are available in the details object.
 
 ## Precision
 
