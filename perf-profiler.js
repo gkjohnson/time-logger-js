@@ -49,27 +49,29 @@
     const pad = (str, width) => str.length < width ? pad(str + ' ', width) : str
 
     /* Public API */
-    const marks = {}
-    const pendingMarks = {}
+    // exposed mark fields for extra debug-ability
+    exports._marks = {}
+    exports._pendingMarks = {}
 
+    // returns the time
     exports.getTime = () => getTime()
 
     // Begins a timing mark
     exports.start = function(str) {
-        pendingMarks[str] = this.getTime()
+        this._pendingMarks[str] = this.getTime()
     }
 
     // Ends a timing mark
     exports.end = function(str) {
-        if (!(str in pendingMarks)) {
-            if (str in marks) console.warn(`'end' called more than once for 'start' on '${str}'`)
+        if (!(str in this._pendingMarks)) {
+            if (str in this._marks) console.warn(`'end' called more than once for 'start' on '${str}'`)
             else console.warn(`'start' not called for '${str}'`)
             return
         }
 
-        const delta = this.getTime() - pendingMarks[str]
+        const delta = this.getTime() - this._pendingMarks[str]
         const details = 
-            marks[str] || {
+            this._marks[str] || {
                 avg: 0,
                 min: delta,
                 max: delta,
@@ -80,27 +82,29 @@
         details.avg += (delta - details.avg) / details.tally
         details.min = Math.min(details.min, delta)
         details.max = Math.max(details.max, delta)
-        marks[str] = details
+        this._marks[str] = details
 
-        delete pendingMarks[str]
+        delete this._pendingMarks[str]
+
+        return delta
     }
 
     // Clears out all accumulated timing
     exports.clear = function(str = null) {
         if (str != null) {
-            if (str in marks)           delete marks[str]
-            if (str in pendingMarks)    delete pendingMarks[str]
+            if (str in this._marks)           delete this._marks[str]
+            if (str in this._pendingMarks)    delete this._pendingMarks[str]
         } else {
-            for (let key in marks) this.clear(key)
-            for (let key in pendingMarks) this.clear(key)
+            for (let key in this._marks) this.clear(key)
+            for (let key in this._pendingMarks) this.clear(key)
         }
     }
 
     // Prints out all the logs for the given timing
     exports.dump = function(str = null, clear = false) {
         if (str != null) {
-            if (str in marks) {
-                const details = marks[str]
+            if (str in this._marks) {
+                const details = this._marks[str]
                 this.log(str, details)
 
                 if (clear) this.clear(str)
@@ -108,7 +112,7 @@
                 console.warn(`no timing details to dump for '${str}'`)
             }
         } else {
-            for (let key in marks) this.dump(key, clear)
+            for (let key in this._marks) this.dump(key, clear)
         }
     }
 
