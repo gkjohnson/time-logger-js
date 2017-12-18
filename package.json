@@ -1,14 +1,14 @@
 {
-  "name": "@gkjohnson/perf-profiler",
+  "name": "time-logger",
   "version": "0.0.3",
-  "description": "Utility library for tracking and tallying function calls in javascript",
-  "main": "perf-profiler.js",
+  "description": "Utility library for tracking and tallying function calls in browsers, Node, or Arangodb's Foxx",
+  "main": "time-logger.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gkjohnson/perf-profiler.git"
+    "url": "git+https://github.com/gkjohnson/time-logger-js.git"
   },
   "keywords": [
     "performance",
@@ -24,7 +24,7 @@
   "author": "Garrett Johnson",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/gkjohnson/perf-profiler/issues"
+    "url": "https://github.com/gkjohnson/time-logger-js/issues"
   },
-  "homepage": "https://github.com/gkjohnson/perf-profiler#readme"
+  "homepage": "https://github.com/gkjohnson/time-logger-js#readme"
 }

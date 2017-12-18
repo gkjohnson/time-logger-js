@@ -45,8 +45,10 @@
         console.warn('Precise timing not available, falling back to millisecond precision with "Date.now()"')
     }
 
+
     /* Utilities */
     const pad = (str, width) => str.length < width ? pad(str + ' ', width) : str
+
 
     /* Public API */
     // exposed mark fields for extra debug-ability
@@ -126,4 +128,4 @@
             pad(`max: ${details.max}ms`, 30))
     }
 
-})(typeof window !== 'undefined' ? window.PerfProfiler = {} : module.exports = {})
+})(typeof window !== 'undefined' ? window.TimeLogger = {} : module.exports = {})
