@@ -1,1 +1,1 @@
-`@gkjohnson/perf-profiler` has been moved to [react-polymer-component](https://www.npmjs.com/package/time-logger). Please install it instead.
+`@gkjohnson/perf-profiler` has been moved to [time-logger](https://www.npmjs.com/package/time-logger). Please install it instead.
