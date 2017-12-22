@@ -19,7 +19,10 @@
     "now",
     "tally",
     "debug",
-    "debugging"
+    "debugging",
+    "foxx",
+    "arango",
+    "arangodb"
   ],
   "author": "Garrett Johnson",
   "license": "ISC",
