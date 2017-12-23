@@ -29,7 +29,7 @@
             // internal.time() returns seconds since
             // epoch with microsecond timing
             const internal = require('internal')
-            const getTimeNow = () => internal.time * 1000 // ms
+            const getTimeNow = () => internal.time() * 1000 // ms
             const startTime = getTimeNow()
             getTime = () => getTimeNow() - startTime
             
