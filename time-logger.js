@@ -107,7 +107,7 @@
         if (str != null) {
             if (str in this._marks) {
                 const details = this._marks[str]
-                this.log(str, details)
+                console.log(str, details)
 
                 if (clear) this.clear(str)
             } else {
@@ -118,14 +118,17 @@
         }
     }
 
-    // Overridable Log function
-    exports.log = (key, details) => {
-        console.log(
-            pad(key, 20),
-            pad(`calls: ${details.tally}`, 15),
-            pad(`avg: ${details.avg}ms`, 30),
-            pad(`min: ${details.min}ms`, 30),
-            pad(`max: ${details.max}ms`, 30))
+    // accessors for reading out timing data
+    exports.getPendingMarks = function() {
+        return Object.key(this._pendingMarks)
+    }
+
+    exports.getTalliedMarks = function() {
+        return Object.keys(this._marks)
+    }
+
+    exports.getMarkData = function(str) {
+        return str in this._marks ? Object.assign({}, this._marks[str]) : null
     }
 
 })(typeof window !== 'undefined' ? window.TimeLogger = {} : module.exports = {})
