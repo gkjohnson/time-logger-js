@@ -3,6 +3,9 @@
   "version": "0.2.0",
   "description": "Utility library for tracking and tallying function calls in browsers, Node, or Arangodb's Foxx",
   "main": "time-logger.js",
+  "files": [
+    "time-logger.js"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,7 +28,7 @@
     "arangodb"
   ],
   "author": "Garrett Johnson",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/gkjohnson/time-logger-js/issues"
   },
