@@ -118,7 +118,7 @@
 
     // accessors for reading out timing data
     exports.getPendingMarks = function() {
-        return Object.key(this._pendingMarks);
+        return Object.keys(this._pendingMarks);
     };
 
     exports.getTalliedMarks = function() {
