@@ -107,7 +107,7 @@ See `getMarkData`.
 
 ### getPendingMarks() : Array
 
-Returns
+Returns an array of all identifiers that have not had "end" called.
 
 ## Precision
 
