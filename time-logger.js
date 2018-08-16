@@ -158,20 +158,20 @@
     };
 
     // accessors for reading out timing data
-    exports.getPendingMarks = function() {
+    exports.getPending = function() {
 
         return Object.keys(this._pendingMarks);
 
     };
 
-    exports.getAllMarkData = function(createCopy = true) {
+    exports.getAllTimingData = function(createCopy = true) {
 
         if (createCopy) {
 
             const res = {};
             for (var mark in this._marks) {
 
-                res[mark] = this.getMarkData(mark, true);
+                res[mark] = this.getTimingData(mark, true);
 
             }
 
@@ -185,7 +185,7 @@
 
     };
 
-    exports.getMarkData = function(str, createCopy = true) {
+    exports.getTimingData = function(str, createCopy = true) {
 
         if (createCopy) {
 

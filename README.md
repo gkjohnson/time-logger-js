@@ -69,7 +69,7 @@ The identifier to print the information for. If null then all information and pe
 
 Whether or not to call "clear" on the key after printing.
 
-### getMarkData(key, createCopy = true) : Object
+### getTimingData(key, createCopy = true) : Object
 
 Returns the data associated with the provided key in the form of an object:
 
@@ -97,15 +97,15 @@ The identifier to get the associated data for.
 
 Whether or not to create a _new_ object with the timing and tally data. If `false` then it is expected that this object is _not_ modified because it is used internally.
 
-### getAllMarkData(createCopy = true) : Object
+### getAllTimingData(createCopy = true) : Object
 
 Returns all available timing data in object form.
 
 #### createCopy
 
-See `getMarkData`.
+See `getTimingData`.
 
-### getPendingMarks() : Array
+### getPending() : Array
 
 Returns an array of all identifiers that have not had "end" called.
 
