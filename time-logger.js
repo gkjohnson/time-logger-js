@@ -5,26 +5,34 @@
 
     // Browser
     if (getTime === null && typeof performance !== 'undefined' && performance.now) {
+
         getTime = () => performance.now();
 
         console.log('Using "performance.now" for timing');
+
     }
 
     // Node.js
     // https://stackoverflow.com/questions/23003252/window-performance-now-equivalent-in-nodejs
     if (getTime === null && typeof process !== 'undefined' && process.hrtime) {
+
         const startTime = process.hrtime();
         getTime = () => {
+
             const delta = process.hrtime(startTime);
             return delta[0] * 1e3 + delta[1] * 1e-6;
+
         };
 
         console.log('Using "process.hrtime" for timing');
+
     }
 
     // ArangoDB Foxx
     if (getTime === null && typeof require !== 'undefined') {
+
         try {
+
             // Using try catch in case the internal package
             // is made unavailable
             // internal.time() returns seconds since
@@ -35,15 +43,18 @@
             getTime = () => getTimeNow() - startTime;
 
             console.log(`Using "require('internal').time" for timing`);
+
         } catch (e) {}
     }
 
     // Fallback to Date.now()
     if (getTime === null) {
+
         const startTime = Date.now();
         getTime = () => Date.now() - startTime;
 
         console.warn('Precise timing not available, falling back to millisecond precision with "Date.now()"');
+
     }
 
     /* Utilities */
@@ -58,16 +69,28 @@
     exports.getTime = () => getTime();
 
     // Begins a timing mark
-    exports.start = function(str) {
+    exports.begin = function(str) {
+
+        if (str in this._pendingMarks) {
+
+            console.warn(`TimeLogger.begin : '${ str }' is already being tracked. Call 'end' first.`);
+            return;
+
+        }
+
         this._pendingMarks[str] = this.getTime();
+
     };
 
     // Ends a timing mark
     exports.end = function(str) {
+
         if (!(str in this._pendingMarks)) {
-            if (str in this._marks) console.warn(`'end' called more than once for 'start' on '${ str }'`);
-            else console.warn(`'start' not called for '${ str }'`);
+
+            if (str in this._marks) console.warn(`TimeLogger.end : 'end' called more than once for 'begin' on '${ str }'.`);
+            else console.warn(`TimeLogger.end : 'begin' not called for '${ str }'.`);
             return;
+
         }
 
         const delta = this.getTime() - this._pendingMarks[str];
@@ -88,38 +111,57 @@
         delete this._pendingMarks[str];
 
         return delta;
+
     };
 
     // Clears out all accumulated timing
     exports.clear = function(str = null) {
+
         if (str != null) {
+
             if (str in this._marks) delete this._marks[str];
             if (str in this._pendingMarks) delete this._pendingMarks[str];
+
         } else {
+
             for (const key in this._marks) this.clear(key);
             for (const key in this._pendingMarks) this.clear(key);
+
         }
+
     };
 
     // Prints out all the logs for the given timing
     exports.dump = function(str = null, clear = false) {
+
         if (str != null) {
+
             if (str in this._marks) {
+
                 const details = this._marks[str];
                 console.log(str, details);
 
                 if (clear) this.clear(str);
+
             } else {
+
                 console.warn(`no timing details to dump for '${ str }'`);
+
             }
+
         } else {
+
             for (const key in this._marks) this.dump(key, clear);
+
         }
+
     };
 
     // accessors for reading out timing data
     exports.getPendingMarks = function() {
+
         return Object.keys(this._pendingMarks);
+
     };
 
     exports.getAllMarkData = function(createCopy = true) {
