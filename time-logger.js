@@ -1,4 +1,5 @@
 (exports => {
+
     /* Get Time Function */
     let getTime = null;
 
