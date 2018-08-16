@@ -16,7 +16,7 @@ TimeLogger.dump('timing-label')
 TimeLogger.clear('timing-label')
 ```
 
-The above will print out the average, min, max, and call count of the code wrapped by `timing-label` in the following format:
+The above will print out the average, min, max, and call count of the code wrapped by `timing-label` (NOTE: formatting is not solidified, yet):
 
 ```
 timing-label         calls: 2        avg: 1532.5ms                  min: 1416ms                    max: 1649ms
@@ -55,11 +55,7 @@ The identifier to clear tracked information for. If null then all tracked and pe
 
 ### dump(key = null, clear = false)
 
-Prints out information associated with provided key in the following format:
-
-```
-timing-label         calls: 2        avg: 1532.5ms                  min: 1416ms                    max: 1649ms
-```
+Prints out information associated with provided key.
 
 #### key : String
 
