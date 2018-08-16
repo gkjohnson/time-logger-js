@@ -122,12 +122,39 @@
         return Object.keys(this._pendingMarks);
     };
 
-    exports.getTalliedMarks = function() {
-        return Object.keys(this._marks);
+    exports.getAllMarkData = function(createCopy = true) {
+
+        if (createCopy) {
+
+            const res = {};
+            for (var mark in this._marks) {
+
+                res[mark] = this.getMarkData(mark, true);
+
+            }
+
+            return res;
+
+        } else {
+
+            return this._marks;
+
+        }
+
     };
 
-    exports.getMarkData = function(str) {
-        return str in this._marks ? Object.assign({}, this._marks[str]) : null;
+    exports.getMarkData = function(str, createCopy = true) {
+
+        if (createCopy) {
+
+            return str in this._marks ? Object.assign({}, this._marks[str]) : null;
+
+        } else {
+
+            return this._marks[str] || null;
+
+        }
+
     };
 
 })(typeof window !== 'undefined' ? window.TimeLogger = {} : module.exports = {});
