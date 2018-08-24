@@ -9,7 +9,7 @@ Utility library for tracking min / max / average evaluation time and tallying nu
 // in node
 const TimeLogger = require('time-logger')
 
-TimeLogger.start('timing-label')
+TimeLogger.begin('timing-label')
 // ... code that needs to be profiled
 TimeLogger.end('timing-label')
 TimeLogger.dump('timing-label')

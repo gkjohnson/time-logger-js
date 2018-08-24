@@ -139,13 +139,20 @@
             if (str in this._marks) {
 
                 const details = this._marks[str];
-                console.log(str, details);
+
+                console.log(
+                    pad(str, 25),
+                    pad(`called: ${ details.tally }`, 10),
+                    pad(`avg: ${ parseFloat(details.avg.toFixed(8)) }ms`, 20),
+                    pad(`min: ${ parseFloat(details.min.toFixed(8)) }ms`, 20),
+                    pad(`max: ${ parseFloat(details.max.toFixed(8)) }ms`, 20)
+                );
 
                 if (clear) this.clear(str);
 
             } else {
 
-                console.warn(`no timing details to dump for '${ str }'`);
+                console.warn(`TimeLogger.dump : no timing details to dump for '${ str }'`);
 
             }
 
