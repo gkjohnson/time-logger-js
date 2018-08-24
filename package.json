@@ -7,6 +7,7 @@
     "time-logger.js"
   ],
   "scripts": {
+    "lint": "eslint *.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -34,6 +35,7 @@
   },
   "homepage": "https://github.com/gkjohnson/time-logger-js#readme",
   "devDependencies": {
+    "eslint": "^5.4.0",
     "jest": "^23.5.0",
     "jest-cli": "^23.5.0",
     "nyc": "^12.0.2"
