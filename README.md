@@ -1,6 +1,8 @@
 # time-logger
 
-[![npm version](https://badge.fury.io/js/time-logger.svg)](https://www.npmjs.com/package/time-logger)
+[![npm version](https://img.shields.io/npm/v/time-logger.svg?style=flat-square)](https://www.npmjs.com/package/time-logger)
+[![travis build](https://img.shields.io/travis/gkjohnson/time-logger-js.svg?style=flat-square)](https://travis-ci.org/gkjohnson/time-logger-js)
+[![lgtm code quality](https://img.shields.io/lgtm/grade/javascript/g/gkjohnson/time-logger-js.svg?style=flat-square&label=code-quality)](https://lgtm.com/projects/g/gkjohnson/time-logger-js/)
 
 Utility library for tracking min / max / average evaluation time and tallying number of calls to code a code block in javascript. A more robust version of `console.time` and `console.timeEnd`.
 
