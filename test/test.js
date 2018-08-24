@@ -67,6 +67,7 @@ describe('TimeLogger', () => {
             TimeLogger.end('label');
 
             expect(called).toEqual(1);
+            expect(TimeLogger.getTimingData('label').tally).toEqual(1);
 
         });
 
@@ -81,6 +82,23 @@ describe('TimeLogger', () => {
             };
 
             TimeLogger.end('label');
+
+            expect(called).toEqual(1);
+
+        });
+
+        it('should warn if begom is called twice', () => {
+
+            let called = 0;
+            console.warn = msg => {
+
+                called++;
+                expect(/TimeLogger.begin : 'label' is already/.test(msg)).toEqual(true);
+
+            };
+
+            TimeLogger.begin('label');
+            TimeLogger.begin('label');
 
             expect(called).toEqual(1);
 
