@@ -121,7 +121,7 @@ describe('TimeLogger', () => {
                 expect(max).toBeTruthy();
 
                 expect(key.trim()).toEqual('label');
-                expect(/called:[\s\d]+/.test(tally.trim())).toEqual(true);
+                expect(/calls:[\s\d]+/.test(tally.trim())).toEqual(true);
                 expect(/avg:[.\s\d]+ms/.test(avg.trim())).toEqual(true);
                 expect(/min:[.\s\d]+ms/.test(min.trim())).toEqual(true);
                 expect(/max:[.\s\d]+ms/.test(max.trim())).toEqual(true);
