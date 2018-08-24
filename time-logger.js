@@ -142,10 +142,10 @@
 
                 console.log(
                     pad(str, 25),
-                    pad(`called: ${ details.tally }`, 10),
-                    pad(`avg: ${ parseFloat(details.avg.toFixed(8)) }ms`, 20),
-                    pad(`min: ${ parseFloat(details.min.toFixed(8)) }ms`, 20),
-                    pad(`max: ${ parseFloat(details.max.toFixed(8)) }ms`, 20)
+                    pad(`calls: ${ details.tally }`, 10),
+                    pad(`avg: ${ parseFloat(details.avg.toFixed(4)) }ms`, 20),
+                    pad(`min: ${ parseFloat(details.min.toFixed(4)) }ms`, 20),
+                    pad(`max: ${ parseFloat(details.max.toFixed(4)) }ms`, 20)
                 );
 
                 if (clear) this.clear(str);
