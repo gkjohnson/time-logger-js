@@ -32,5 +32,10 @@
   "bugs": {
     "url": "https://github.com/gkjohnson/time-logger-js/issues"
   },
-  "homepage": "https://github.com/gkjohnson/time-logger-js#readme"
+  "homepage": "https://github.com/gkjohnson/time-logger-js#readme",
+  "devDependencies": {
+    "jest": "^23.5.0",
+    "jest-cli": "^23.5.0",
+    "nyc": "^12.0.2"
+  }
 }
